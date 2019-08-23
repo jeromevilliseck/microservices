@@ -6,6 +6,7 @@ import com.ecommerce.microcommerce.web.exceptions.ProduitIntrouvableException;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJacksonValue;
@@ -16,6 +17,26 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
+@SwaggerDefinition(
+        info = @Info(
+                description = "Awesome Resources",
+                version = "V12.0.12",
+                title = "Awesome Resource API",
+                contact = @Contact(
+                        name = "Ranga Karanam",
+                        email = "ranga@in28minutes.com",
+                        url = "http://www.in28minutes.com"
+                ),
+                license = @License(
+                        name = "Apache 2.0",
+                        url = "http://www.apache.org/licenses/LICENSE-2.0"
+                )
+        ),
+        consumes = {"application/json", "application/xml"},
+        produces = {"application/json", "application/xml"},
+        schemes = {SwaggerDefinition.Scheme.HTTP, SwaggerDefinition.Scheme.HTTPS},
+        externalDocs = @ExternalDocs(value = "Read This For Sure", url = "http://in28minutes.com")
+)
 @RestController
 public class ProductController {
     @Autowired
@@ -41,6 +62,7 @@ public class ProductController {
      * @param id produit que l'on souhaite récupérer
      * @return un objet produit
      */
+    @ApiOperation(value = "Récupère un produit grâce à son ID à condition que celui-ci soit en stock!")
     @GetMapping(value="/Produits/{id}")
     public Product afficherUnProduit(@PathVariable int id) {
         Product produit = dao.findById(id);
